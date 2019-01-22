@@ -1,8 +1,15 @@
 <?php
 include('../common/session.php');
-    $ses_sql = mysqli_query($db,"SELECT * FROM reservation
+
+    $sql = "SELECT reservation.id, reservation.timeslot, reservation.court_number, club.name FROM reservation
                                             LEFT JOIN club ON club.id = reservation.clubid 
-                                            WHERE clubid=".$clubid);
+                                            WHERE clubid=".$clubid;
+
+    if (isset($_GET['date'])){
+        $sql = $sql.' AND timeslot LIKE "%'.$_GET['date'].'%"';
+    }
+
+    $ses_sql = mysqli_query($db, $sql);
     $myArray = array();
     while($row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC)){
         $myArray[] = $row;

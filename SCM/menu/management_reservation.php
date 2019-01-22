@@ -25,11 +25,21 @@ include('../common/session.php');
                 loadReservations();
             }
 
-            function loadReservations(){
+            $('#date').on('change', function(){
+                var d = new Date($(this).val());
+                loadReservations((d.getDate() <= 9 ? 0 : "") + d.getDate() + "/" + (d.getMonth() < 9 ? 0 : "") + (d.getMonth() + 1) + "/" + d.getFullYear());
+            });
+
+            function loadReservations(date){
+                var url = '../reservation/load_reservations.php';
+                if (date) {
+                    url += '?date=' + date;
+                }
                 $.ajax({
-                    url: '../reservation/load_reservations.php',
+                    url: url,
                     type: 'GET',
                     success: function(data) {
+                        console.log(data);
                         reservations = JSON.parse(data);
                         fillTable(reservations);
                     }
@@ -39,7 +49,9 @@ include('../common/session.php');
             function fillTable(reservations){
                 $('#reservations').html('');
                 for (var i in reservations){
-                    $('#reservations').append('<div class="row"><div class="col-8">' + JSON.stringify(reservations[i]) + '</div></div>');
+                    console.log(reservations[i]);
+                    $('#reservations').append($('#reservationRow').html());
+                    $('#reservations').find('.col-8').last().html(reservations[i].timeslot + ", court number " + reservations[i].court_number);
                 }
             }
 
@@ -85,7 +97,22 @@ include("../menu/menu.php");
         <div class="col-8">
             <h3>Reserevations</h3>
         </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-1">
+                    <label for="date">Date</label>
+                </div>
+                <div class="col-2">
+                    <input id="date" type="date" class="form-control"/>
+                </div>
+            </div>
+        </div>
         <div id="reservations" class="col-8">
+        </div>
+        <div id="reservationRow">
+            <div class="row">
+                <div class="col-8"></div>
+            </div>
         </div>
     </div>
 </div>
