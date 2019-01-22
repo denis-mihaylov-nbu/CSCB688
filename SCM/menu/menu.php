@@ -15,7 +15,7 @@
     <?php
         if (!$admin){
             echo '<div class="col-1 menu-item">';
-            echo '<a class="nav-link" href="../receipt/receipt.php">Receipt</a>';
+            echo '<a class="nav-link" href="../menu/management_reservation.php">Reserevations</a>';
             echo '</div>';
             echo '<div class="col-1 menu-item">';
             echo '<a class="nav-link" href="../calendar/calendar.php">Calendar</a>';
