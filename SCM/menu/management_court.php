@@ -147,7 +147,7 @@ include("menu.php");
         <label for="number">Court number</label>
         <input id="number" type="text" class="form-control" <?php if (!$admin) echo 'disabled'?>/>
         <label for="court_type">Type</label>
-        <select id="court_type" class="form-control" <?php if ($userid > 1) echo 'disabled'?>>
+        <select id="court_type" class="form-control">
             <?php if ($userid == 1) echo '<option value="0">-</option>'?>
         </select>
         <label for="club_id">Club</label>
